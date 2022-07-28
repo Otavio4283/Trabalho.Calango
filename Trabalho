@@ -1,0 +1,114 @@
+algoritmo precotrabalho;
+// Síntese
+//  Objetivo:Registrar produtos, comparar os diversos preços de um certo produto e poder procurar certo produto, dizendo se foi registrado e os maiores e menores preços desses
+//  Entrada :Um valor n para o que deve ser feito, o nome do produto, os preços relacionados a esse dado produto e o produto a ser buscado
+//  Saída   :O nome do produto, o maior preço e menor preço desse certo produto
+
+
+principal
+	//Declarações
+	inteiro n,i;
+	texto nome[100];
+	real maior_preco[100], menor_preco[100],preco[99];
+	i=0;
+	//Instruções
+	//Menu de opções
+	faca
+		escreval("\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//");
+		escreval("\\//\\//\\//\\//1)Registrar Produto                     \\//\\//\\//\\//");
+		escreval("\\//\\//\\//\\//2)Registrar Preço                       \\//\\//\\//\\//");
+		escreval("\\//\\//\\//\\//3)Buscar Produto                        \\//\\//\\//\\//");
+		escreval("\\//\\//\\//\\//0)Encerrar                              \\//\\//\\//\\//");
+		escreval("\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//");
+		leia(n);
+		se(n==1)entao
+			registra_nome(nome, i);
+			i=i+1;
+		senao
+			se(n==2)entao
+				registra_preco(nome,i,maior_preco, menor_preco,preco);
+			senao
+				se(n==3)entao
+					buscar(nome, i,maior_preco, menor_preco,preco);
+				fimSe
+			fimSe
+		fimSe
+	enquanto(n!=0);
+fimPrincipal
+//
+//Procedimento realiza o registro do produto
+procedimento registra_nome(texto nome[], inteiro i)
+escreval("Digite o nome do produto a ser registrado:");
+leia(nome[i]);
+escreval("Produto ",nome[i]," registrado.");
+
+fimProcedimento
+//
+//Procedimento para registrar os preços de um certo produto
+procedimento registra_preco(texto nome[],inteiro i,real maior_preco[],real menor_preco[],real preco[])
+inteiro x,y;
+texto busca;
+inteiro z,teste;
+teste=0;
+//Verificar se existe um produto com esse nome, senão retornar a primeira função
+escreval("Qual produto quer registrar o preço?");
+leia(busca);
+para(z de 0 ate i-1 passo 1)faca
+	se(comparaTexto(busca,nome[z])==0)entao
+		teste=1;
+		maior_preco[z]=0;
+		menor_preco[z]=900000000;
+		interrompa;
+	senao
+		teste=0;
+	fimSe
+fimPara
+se(teste==1)entao
+	escreval("O produto ",nome[z]," existe.");
+//Registro de preços de certo produto
+	escreval("");
+	escreval("Quantos preços serão lidos?");
+leia(x);
+para(y de 1 ate x passo 1)faca
+	escreval("Digite o preço do produto.");
+	leia(preco[y]);
+	se(preco[y]>maior_preco[z])entao
+		maior_preco[z]=preco[y];
+	fimSe
+	
+	se(preco[y]<menor_preco[z])entao
+		menor_preco[z]=preco[y];
+	fimSe
+
+fimPara
+escreval("Maior Preço = ",maior_preco[z],"| Menor Preço = ",menor_preco[z]);
+senao
+	escreval("O produto não existe!");
+fimSe
+fimProcedimento
+//
+//Realiza a busca do produto e preços desse
+procedimento buscar(texto nome[], inteiro i,real maior_preco[],real menor_preco[],real preco[])
+texto busca;
+inteiro z,h,teste;
+teste=0;
+escreval("Digite o produto que quer pesquisar:");
+leia(busca);
+se(i==0)entao
+	escreval("Nenhum produto regitrado");
+fimSe
+para(z de 0 ate i-1 passo 1)faca
+	se(comparaTexto(busca,nome[z])==0)entao
+		teste=1;
+		interrompa;
+	senao
+		teste=0;
+	fimSe
+fimPara
+se(teste==1)entao
+	escreval("O produto ",nome[z]," existe.");
+	escreval("Maior Preço = ",maior_preco[z],"| Menor Preço = ",menor_preco[z]);
+senao
+	escreval("O produto não existe!");
+fimSe
+fimProcedimento
